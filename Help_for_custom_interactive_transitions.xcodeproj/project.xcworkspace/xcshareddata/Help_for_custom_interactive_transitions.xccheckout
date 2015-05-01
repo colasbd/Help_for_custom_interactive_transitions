@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>668BAF97-1535-4E8E-A8DE-87B06B098A70</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Help_for_custom_interactive_transitions</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>D94A8351B1DBD43F7DBED5B89DE538B0193CB56B</key>
+		<string>https://bitbucket.org/colasjojo/smartmathsmp.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>learning/Help_for_custom_interactive_transitions/Help_for_custom_interactive_transitions.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>D94A8351B1DBD43F7DBED5B89DE538B0193CB56B</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://bitbucket.org/colasjojo/smartmathsmp.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>D94A8351B1DBD43F7DBED5B89DE538B0193CB56B</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>D94A8351B1DBD43F7DBED5B89DE538B0193CB56B</string>
+			<key>IDESourceControlWCCName</key>
+			<string>SmartMathsMP</string>
+		</dict>
+	</array>
+</dict>
+</plist>
