@@ -166,7 +166,7 @@
 
         if (self.interactionStarted)
         {
-            [self updateInteractiveTransition:d*0.5];
+            [self updateInteractiveTransition:d*2];
         }
     }
     else if (recognizer.state >= UIGestureRecognizerStateEnded)

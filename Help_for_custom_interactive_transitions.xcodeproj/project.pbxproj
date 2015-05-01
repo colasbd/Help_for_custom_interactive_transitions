@@ -21,6 +21,8 @@
 		CE4142121AF3D92300700B8B /* CBDPanAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4142101AF3D92300700B8B /* CBDPanAnimationController.m */; };
 		CE4142181AF3D94800700B8B /* CBDPanToPopTransitionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4142151AF3D94800700B8B /* CBDPanToPopTransitionManager.m */; };
 		CE4142191AF3D94800700B8B /* AWPercentDrivenInteractiveTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4142171AF3D94800700B8B /* AWPercentDrivenInteractiveTransition.m */; };
+		CE41421F1AF3EF3100700B8B /* CEPanAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE41421C1AF3EF3100700B8B /* CEPanAnimationController.m */; };
+		CE4142201AF3EF3100700B8B /* CEReversibleAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE41421E1AF3EF3100700B8B /* CEReversibleAnimationController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +62,10 @@
 		CE4142151AF3D94800700B8B /* CBDPanToPopTransitionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBDPanToPopTransitionManager.m; sourceTree = "<group>"; };
 		CE4142161AF3D94800700B8B /* AWPercentDrivenInteractiveTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWPercentDrivenInteractiveTransition.h; sourceTree = "<group>"; };
 		CE4142171AF3D94800700B8B /* AWPercentDrivenInteractiveTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWPercentDrivenInteractiveTransition.m; sourceTree = "<group>"; };
+		CE41421B1AF3EF3100700B8B /* CEPanAnimationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CEPanAnimationController.h; sourceTree = "<group>"; };
+		CE41421C1AF3EF3100700B8B /* CEPanAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CEPanAnimationController.m; sourceTree = "<group>"; };
+		CE41421D1AF3EF3100700B8B /* CEReversibleAnimationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CEReversibleAnimationController.h; sourceTree = "<group>"; };
+		CE41421E1AF3EF3100700B8B /* CEReversibleAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CEReversibleAnimationController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +107,7 @@
 		CE4141DA1AF3D7D200700B8B /* Help_for_custom_interactive_transitions */ = {
 			isa = PBXGroup;
 			children = (
+				CE41421A1AF3EF2600700B8B /* Other animations */,
 				CE4142131AF3D92800700B8B /* My Interactive Transition Manager */,
 				CE41420C1AF3D91200700B8B /* My custom animator */,
 				CE4142071AF3D8DD00700B8B /* My Custom Navigation Controller */,
@@ -182,6 +189,17 @@
 				CE4142171AF3D94800700B8B /* AWPercentDrivenInteractiveTransition.m */,
 			);
 			name = "My Interactive Transition Manager";
+			sourceTree = "<group>";
+		};
+		CE41421A1AF3EF2600700B8B /* Other animations */ = {
+			isa = PBXGroup;
+			children = (
+				CE41421B1AF3EF3100700B8B /* CEPanAnimationController.h */,
+				CE41421C1AF3EF3100700B8B /* CEPanAnimationController.m */,
+				CE41421D1AF3EF3100700B8B /* CEReversibleAnimationController.h */,
+				CE41421E1AF3EF3100700B8B /* CEReversibleAnimationController.m */,
+			);
+			name = "Other animations";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -287,6 +305,8 @@
 			files = (
 				CE4141E41AF3D7D200700B8B /* ViewController.m in Sources */,
 				CE4142181AF3D94800700B8B /* CBDPanToPopTransitionManager.m in Sources */,
+				CE41421F1AF3EF3100700B8B /* CEPanAnimationController.m in Sources */,
+				CE4142201AF3EF3100700B8B /* CEReversibleAnimationController.m in Sources */,
 				CE4141E11AF3D7D200700B8B /* AppDelegate.m in Sources */,
 				CE41420A1AF3D8EC00700B8B /* MyCBDNavigationController.m in Sources */,
 				CE4142051AF3D8D200700B8B /* ColorViewController.m in Sources */,
@@ -418,6 +438,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Help_for_custom_interactive_transitions/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -428,6 +449,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Help_for_custom_interactive_transitions/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

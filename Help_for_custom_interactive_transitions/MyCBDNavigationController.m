@@ -409,6 +409,7 @@
 - (void)popViewControllerAnimated:(BOOL)animated
                   withInteraction:(BOOL)withInteraction
 {
+    NSLog(@"to be popped: %ld", self.numberOfVCToBePopped) ;
     if (self.numberOfVCToBePushed > 0)
     {
         return ;
@@ -422,7 +423,9 @@
     /*
      Limit case
      */
-    if (poppedOutVC == self.rootViewController)
+    if (poppedOutVC == self.rootViewController
+        ||
+        !poppedOutVC)
     {
         self.numberOfVCToBePopped-- ;
         return ;

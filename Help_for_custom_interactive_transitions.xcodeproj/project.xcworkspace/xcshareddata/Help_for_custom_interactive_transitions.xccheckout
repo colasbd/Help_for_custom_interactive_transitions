@@ -12,20 +12,24 @@
 	<dict>
 		<key>D94A8351B1DBD43F7DBED5B89DE538B0193CB56B</key>
 		<string>https://bitbucket.org/colasjojo/smartmathsmp.git</string>
+		<key>F7E2CA2E93C728D7C6BA5FA791D48A3B99FD7173</key>
+		<string>https://github.com/colasjojo/Help_for_custom_interactive_transitions.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>learning/Help_for_custom_interactive_transitions/Help_for_custom_interactive_transitions.xcodeproj</string>
+	<string>Help_for_custom_interactive_transitions.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>D94A8351B1DBD43F7DBED5B89DE538B0193CB56B</key>
 		<string>../../../..</string>
+		<key>F7E2CA2E93C728D7C6BA5FA791D48A3B99FD7173</key>
+		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://bitbucket.org/colasjojo/smartmathsmp.git</string>
+	<string>https://github.com/colasjojo/Help_for_custom_interactive_transitions.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>D94A8351B1DBD43F7DBED5B89DE538B0193CB56B</string>
+	<string>F7E2CA2E93C728D7C6BA5FA791D48A3B99FD7173</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
@@ -34,7 +38,15 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>D94A8351B1DBD43F7DBED5B89DE538B0193CB56B</string>
 			<key>IDESourceControlWCCName</key>
-			<string>SmartMathsMP</string>
+			<string>..</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>F7E2CA2E93C728D7C6BA5FA791D48A3B99FD7173</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Help_for_custom_interactive_transitions</string>
 		</dict>
 	</array>
 </dict>

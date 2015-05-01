@@ -4,34 +4,28 @@
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         BreakpointExtensionID = "Xcode.Breakpoint.SymbolicBreakpoint">
          <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Help_for_custom_interactive_transitions/CBDPanToPopTransitionManager.m"
-            timestampString = "452192775.465891"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "137"
-            endingLineNumber = "137"
-            landmarkName = "-startInteractiveTransition:"
-            landmarkType = "5">
+            symbolName = ""
+            moduleName = "">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Help_for_custom_interactive_transitions/CBDPanToPopTransitionManager.m"
-            timestampString = "452193471.081715"
+            filePath = "Help_for_custom_interactive_transitions/MyCBDNavigationController.m"
+            timestampString = "452194287.309144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "153"
-            endingLineNumber = "153"
-            landmarkName = "-mainPan:"
+            startingLineNumber = "409"
+            endingLineNumber = "409"
+            landmarkName = "-popViewControllerAnimated:withInteraction:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
