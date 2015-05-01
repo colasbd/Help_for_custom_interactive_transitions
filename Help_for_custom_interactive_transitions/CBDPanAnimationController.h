@@ -13,14 +13,6 @@
 
 
 
-/**************************************/
-#pragma mark - Declaration of constants
-/**************************************/
-//
-//extern NSString* const <#example of a constant#> ;
-
-
-
 
 
 /**************************************/

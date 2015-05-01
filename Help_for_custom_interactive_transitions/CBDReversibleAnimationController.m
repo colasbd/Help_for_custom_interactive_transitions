@@ -45,37 +45,6 @@
 
 
 
-///**************************************/
-//#pragma mark - Enums
-///**************************************/
-//
-//typedef NS_ENUM(NSInteger, <#example of ENUM#>)
-//{
-//    <#example of ENUM#>Item1,
-//    <#example of ENUM#>Item2,
-//    <#example of ENUM#>Item3,
-//};
-
-
-
-
-
-
-
-
-
-
-
-/**************************************/
-#pragma mark - Instanciation of constants
-/**************************************/
-
-//static NSString* const <#example of a constant#> = @"Example of a constant";
-
-
-
-
-
 
 
 
@@ -139,7 +108,7 @@
 
 - (id)init {
     if (self = [super init]) {
-        self.duration = 1.0f;
+        self.duration = 2.0f;
     }
     return self;
 }

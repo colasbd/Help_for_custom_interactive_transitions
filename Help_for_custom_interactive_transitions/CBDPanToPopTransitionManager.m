@@ -45,38 +45,6 @@
 
 
 
-///**************************************/
-//#pragma mark - Enums
-///**************************************/
-//
-//typedef NS_ENUM(NSInteger, <#example of ENUM#>)
-//{
-//    <#example of ENUM#>Item1,
-//    <#example of ENUM#>Item2,
-//    <#example of ENUM#>Item3,
-//};
-
-
-
-
-
-
-
-
-
-
-
-/**************************************/
-#pragma mark - Instanciation of constants
-/**************************************/
-
-//static NSString* const <#example of a constant#> = @"Example of a constant";
-
-
-
-
-
-
 
 
 /**************************************/
@@ -93,16 +61,14 @@
 /*
  Components
  */
-@property (nonatomic, strong, readwrite) UITapGestureRecognizer * tapGestureRecognizer ;
 @property (nonatomic, strong, readwrite) UIPanGestureRecognizer * mainPanGestureRecognizer ;
-@property (nonatomic, strong, readwrite) UIPanGestureRecognizer * rightSideSwipeGestureRecognizer ;
 
 
 /*
  Object state
 */
 @property (nonatomic, assign, readwrite) BOOL leftToRightTransition;
-
+@property (nonatomic, assign, readwrite) BOOL interactionStarted ;
 
 /*
  Convenient properties
@@ -112,7 +78,6 @@
 /*
  References
  */
-@property (nonatomic, weak, readwrite) MyCBDNavigationController * navigationController ;
 
 
 
@@ -142,30 +107,16 @@
 
 
 
-- (instancetype)initWithAnimator:(id<UIViewControllerAnimatedTransitioning>)animator
-                  viewForPopping:(UIView *)viewForPopping
-              mainViewForPanning:(UIView *)mainViewForSwiping
-         rightSideViewForPanning:(UIView *)rightSideViewForSwiping
-                             for:(MyCBDNavigationController *)nvc
+- (instancetype)initWitMainViewForPanning:(UIView *)mainViewForSwiping
 {
-    self = [super initWithAnimator:animator] ;
+    self = [super initWithAnimator:nil] ;
     
     if (self)
     {
-        _navigationController = nvc ;
-        
-        _tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                             action:@selector(tap:)] ;
-        
         _mainPanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self
                                                                              action:@selector(mainPan:)] ;
         
-        _rightSideSwipeGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self
-                                                                                     action:@selector(rightSidePan:)] ;
-        
-        [viewForPopping addGestureRecognizer:_tapGestureRecognizer] ;
         [mainViewForSwiping addGestureRecognizer:_mainPanGestureRecognizer] ;
-        [rightSideViewForSwiping addGestureRecognizer:_rightSideSwipeGestureRecognizer] ;
     }
     
     return self ;
@@ -175,26 +126,19 @@
 
 -(void)dealloc
 {
-    for (UIGestureRecognizer * reco in @[self.tapGestureRecognizer,
-                                         self.mainPanGestureRecognizer,
-                                         self.rightSideSwipeGestureRecognizer])
-    {
-        [reco.view removeGestureRecognizer:reco] ;
-    }
+    [self.mainPanGestureRecognizer.view removeGestureRecognizer:self.mainPanGestureRecognizer] ;
 }
 
 
 
-- (void)tap:(UITapGestureRecognizer *)tapReco
+
+
+- (void)startInteractiveTransition:(id<UIViewControllerContextTransitioning>)transitionContext
 {
-    
-}
-
-
-
-- (void)startInteractiveTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
     [super startInteractiveTransition:transitionContext];
 
+    self.interactionStarted = YES ;
+    
     UIPanGestureRecognizer * recognizer = self.mainPanGestureRecognizer ;
     
     self.leftToRightTransition = [recognizer velocityInView:recognizer.view].x > 0;
@@ -205,7 +149,7 @@
 - (void)mainPan:(UIPanGestureRecognizer *)recognizer
 {
     if (recognizer.state == UIGestureRecognizerStateBegan) {
-        
+
         BOOL leftToRight = [recognizer velocityInView:recognizer.view].x > 0;
         
         if (leftToRight)
@@ -220,27 +164,26 @@
         CGFloat d = translation.x / CGRectGetWidth(recognizer.view.bounds);
         if (!self.leftToRightTransition) d *= -1;
 
-        [self updateInteractiveTransition:d*0.5];
+        if (self.interactionStarted)
+        {
+            [self updateInteractiveTransition:d*0.5];
+        }
     }
     else if (recognizer.state >= UIGestureRecognizerStateEnded)
     {
         if (self.percentComplete > 0.2)
         {
+            self.interactionStarted = NO ;
             [self finishInteractiveTransition];
         }
         else
         {
+            self.interactionStarted = NO ;
             [self cancelInteractiveTransition];
         }
     }
 }
 
-
-
-- (void)rightSidePan:(UITapGestureRecognizer *)tapReco
-{
-    
-}
 
 
 

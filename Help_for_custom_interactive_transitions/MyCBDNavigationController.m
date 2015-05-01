@@ -117,7 +117,7 @@
                           toViewController:(UIViewController *)toViewController
                           inContainterView:(UIView *)containerView
 {
-   // NSAssert ([fromViewController isViewLoaded] && fromViewController.view.superview, @"The fromViewController view must reside in the container view upon initializing the transition context.");
+    // NSAssert ([fromViewController isViewLoaded] && fromViewController.view.superview, @"The fromViewController view must reside in the container view upon initializing the transition context.");
     
     if ((self = [super init])) {
         self.presentationStyle = UIModalPresentationCustom;
@@ -226,9 +226,11 @@
 
 
 /*
- Assistant properties
+ Object state
  */
 @property (nonatomic, weak, readwrite) UIViewController * nextViewControllerToPop ;
+@property (nonatomic, assign, readwrite) NSUInteger numberOfVCToBePushed ;
+@property (nonatomic, assign, readwrite) NSUInteger numberOfVCToBePopped ;
 
 @end
 
@@ -248,6 +250,7 @@
 
 - (instancetype)initWithRootViewController:(UIViewController *)rootViewController
                                  withFrame:(CGRect)frame
+                 withInteractionController:(id<UIViewControllerInteractiveTransitioning>)interactionController
 {
     self = [super init] ;
     
@@ -256,9 +259,10 @@
         /*
          Init
          */
+        _numberOfVCToBePushed = 0 ;
+        _numberOfVCToBePopped = 0 ;
         _mutableViewControllers = [NSMutableArray new] ;
         _mutableTransitions = [NSMutableArray new] ;
-        
         
         /*
          Create the view
@@ -284,7 +288,7 @@
         /*
          Interaction Controller
          */
-        _interactionController = [[AWPercentDrivenInteractiveTransition alloc] initWithAnimator:nil] ;
+        _interactionController = interactionController ;
     }
     
     return self ;
@@ -309,14 +313,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 
 
@@ -376,11 +380,11 @@
 - (void)fillContainerViewWith:(UIView *)view
 {
     view.translatesAutoresizingMaskIntoConstraints = YES ;
-//    [self.containerView addAutoLayoutSubview:view] ;
+    //    [self.containerView addAutoLayoutSubview:view] ;
     
     
-//    CGRect frame = self.view.frame ;
-//    frame.origin = CGPointZero ;
+    //    CGRect frame = self.view.frame ;
+    //    frame.origin = CGPointZero ;
     
     view.frame = self.containerView.bounds ;
     
@@ -403,8 +407,15 @@
 
 
 - (void)popViewControllerAnimated:(BOOL)animated
-                 withInteraction:(BOOL)withInteraction
+                  withInteraction:(BOOL)withInteraction
 {
+    if (self.numberOfVCToBePushed > 0)
+    {
+        return ;
+    }
+    
+    self.numberOfVCToBePopped++ ;
+    
     
     UIViewController * poppedOutVC = self.nextViewControllerToPop ;
     
@@ -413,6 +424,7 @@
      */
     if (poppedOutVC == self.rootViewController)
     {
+        self.numberOfVCToBePopped-- ;
         return ;
     }
     
@@ -433,6 +445,7 @@
         
         [poppedOutVC.view removeFromSuperview];
         [poppedOutVC removeFromParentViewController];
+        self.numberOfVCToBePopped-- ;
     }
     
     
@@ -473,13 +486,6 @@
         }
         
         
-        //    nil;
-        //    if ([self.delegate respondsToSelector:@selector (containerViewController:animationControllerForTransitionFromViewController:toViewController:)]) {
-        //        animator = [self.delegate containerViewController:self animationControllerForTransitionFromViewController:fromViewController toViewController:toViewController];
-        //    }
-        //    animator = (animator ?: [[PrivateAnimatedTransition alloc] init]);
-        
-        // Because of the nature of our view controller, with horizontally arranged buttons, we instantiate our private transition context with information about whether this is a left-to-right or right-to-left transition. The animator can use this information if it wants.
         
         
         UIViewController * toViewController = [self previousControllerThan:poppedOutVC] ;
@@ -492,12 +498,13 @@
         transitionContext.animated = YES;
         transitionContext.interactive = (interactionController != nil);
         transitionContext.completionBlock = ^(BOOL didComplete) {
-                    [poppedOutVC.view removeFromSuperview];
-                    [poppedOutVC removeFromParentViewController];
+            [poppedOutVC.view removeFromSuperview];
+            [poppedOutVC removeFromParentViewController];
             
             [self.mutableViewControllers removeLastObject] ;
             [self.mutableTransitions removeLastObject] ;
-
+            self.numberOfVCToBePopped-- ;
+            
             
             if ([animator respondsToSelector:@selector (animationEnded:)]) {
                 [animator animationEnded:didComplete];
@@ -505,7 +512,7 @@
         };
         
         
-
+        
         /*
          ****************
          CORE management of interaction !!
@@ -513,8 +520,6 @@
          */
         if ([transitionContext isInteractive])
         {
-           // [animator animateTransition:transitionContext];
-
             [interactionController startInteractiveTransition:transitionContext];
         }
         else
@@ -533,6 +538,15 @@
 - (void)pushViewController:(UIViewController *)toViewController
             withTransition:(MyCBDTransitionForNavigationController *)transition
 {
+    if (self.numberOfVCToBePopped > 0)
+    {
+        return ;
+    }
+    
+    
+    self.numberOfVCToBePushed++ ;
+    
+    
     self.nextViewControllerToPop = toViewController ;
     
     
@@ -541,6 +555,7 @@
      */
     UIViewController *fromViewController = ([self.mutableViewControllers count] > 0 ? [self.mutableViewControllers lastObject] : nil);
     if (toViewController == fromViewController || ![self isViewLoaded]) {
+        self.numberOfVCToBePushed-- ;
         return;
     }
     
@@ -552,8 +567,8 @@
     /*
      https://github.com/objcio/issue-12-custom-container-transitions
      */
-
-
+    
+    
     
     UIView *toView = toViewController.view;
     [toView setTranslatesAutoresizingMaskIntoConstraints:YES];
@@ -562,18 +577,10 @@
     [self addChildViewController:toViewController];
     
     
-    // Animate the transition by calling the animator with our private transition context. If we don't have a delegate, or if it doesn't return an animated transitioning object, we will use our own, private animator.
+    
     
     id<UIViewControllerAnimatedTransitioning>animator = transition.normalTransition ;
     
-//    nil;
-//    if ([self.delegate respondsToSelector:@selector (containerViewController:animationControllerForTransitionFromViewController:toViewController:)]) {
-//        animator = [self.delegate containerViewController:self animationControllerForTransitionFromViewController:fromViewController toViewController:toViewController];
-//    }
-//    animator = (animator ?: [[PrivateAnimatedTransition alloc] init]);
-    
-    // Because of the nature of our view controller, with horizontally arranged buttons, we instantiate our private transition context with information about whether this is a left-to-right or right-to-left transition. The animator can use this information if it wants.
-
     
     MyCBDPrivateTransitionContext *transitionContext ;
     transitionContext = [[MyCBDPrivateTransitionContext alloc] initWithFromViewController:fromViewController
@@ -582,23 +589,25 @@
     
     transitionContext.animated = YES;
     transitionContext.interactive = NO;
+    __weak typeof(self)weakSelf = self;
     transitionContext.completionBlock = ^(BOOL didComplete) {
         [fromViewController.view removeFromSuperview];
-//        [fromViewController removeFromParentViewController];
         [toViewController didMoveToParentViewController:self];
+        weakSelf.numberOfVCToBePushed-- ;
+        
         
         if ([animator respondsToSelector:@selector (animationEnded:)]) {
-
+            
             [animator animationEnded:didComplete];
-
+            
         }
     };
     
     [animator animateTransition:transitionContext];
     
-
     
- 
+    
+    
 }
 
 

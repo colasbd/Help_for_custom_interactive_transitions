@@ -36,8 +36,13 @@
     CGRect frame = self.mainView.frame ;
     frame.origin = CGPointZero ;
     
+    
+    self.animationController = [[CBDPanToPopTransitionManager alloc] initWitMainViewForPanning:self.viewForGestureRecognizer] ;
+    
+    
     MyCBDNavigationController *nvc = [[MyCBDNavigationController alloc] initWithRootViewController:cvc
-                                                                                         withFrame:frame] ;
+                                                                                         withFrame:frame withInteractionController:self.animationController] ;
+    self.animationController.navigationController = nvc ; 
     
     nvc.view.backgroundColor = [UIColor blueColor] ;
     self.navigationController = nvc ;
@@ -45,12 +50,8 @@
     [self.mainView addSubview:nvc.view] ;
     
     
-    self.animationController = [[CBDPanToPopTransitionManager alloc] initWithAnimator:nil
-                                                                       viewForPopping:nil
-                                                                   mainViewForPanning:self.viewForGestureRecognizer
-                                                              rightSideViewForPanning:nil
-                                                                                  for:self.navigationController] ;
-
+  
+                                
 }
 
 - (void)didReceiveMemoryWarning {

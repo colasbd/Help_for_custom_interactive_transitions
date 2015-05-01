@@ -27,7 +27,7 @@
 #import "AWPercentDrivenInteractiveTransition.h"
 
 @interface AWPercentDrivenInteractiveTransition ()
-@property (nonatomic, strong, readwrite) id<UIViewControllerContextTransitioning> theTransitionContext ;
+@property (nonatomic, strong, readwrite) id<UIViewControllerContextTransitioning> transitionContext ;
 @end
 
 @implementation AWPercentDrivenInteractiveTransition {
@@ -59,9 +59,9 @@
 }
 
 
-- (void)setTheTransitionContext:(id<UIViewControllerContextTransitioning>)theTransitionContext
+- (void)setTransitionContext:(id<UIViewControllerContextTransitioning>)theTransitionContext
 {
-    _theTransitionContext = theTransitionContext ;
+    _transitionContext = theTransitionContext ;
 }
 
 #pragma mark - Public methods
@@ -69,14 +69,14 @@
     return _isInteracting;
 }
 - (CGFloat)duration {
-    return [_animator transitionDuration:self.theTransitionContext];
+    return [_animator transitionDuration:self.transitionContext];
 }
 - (void)startInteractiveTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
     
-    self.theTransitionContext = transitionContext;
-    [self.theTransitionContext containerView].layer.speed = 0;
+    self.transitionContext = transitionContext;
+    [self.transitionContext containerView].layer.speed = 0;
     
-    [_animator animateTransition:self.theTransitionContext];
+    [_animator animateTransition:self.transitionContext];
 }
 - (void)updateInteractiveTransition:(CGFloat)percentComplete {
     self.percentComplete = fmaxf(fminf(percentComplete, 1), 0); // Input validation
@@ -86,10 +86,10 @@
     _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(_tickCancelAnimation)];
     [_displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
     
-    [self.theTransitionContext cancelInteractiveTransition];
+    [self.transitionContext cancelInteractiveTransition];
 }
 - (void)finishInteractiveTransition {
-    CALayer *layer = [self.theTransitionContext containerView].layer;
+    CALayer *layer = [self.transitionContext containerView].layer;
     
     layer.speed = [self completionSpeed];
     
@@ -99,7 +99,7 @@
     CFTimeInterval timeSincePause = [layer convertTime:CACurrentMediaTime() fromLayer:nil] - pausedTime;
     layer.beginTime = timeSincePause;
     
-    [self.theTransitionContext finishInteractiveTransition];
+    [self.transitionContext finishInteractiveTransition];
 }
 
 #pragma mark - Private methods
@@ -108,10 +108,16 @@
     _percentComplete = percentComplete;
     
     [self _setTimeOffset:percentComplete*[self duration]];
-    [self.theTransitionContext updateInteractiveTransition:percentComplete];
+    [self.transitionContext updateInteractiveTransition:percentComplete];
 }
 - (void)_setTimeOffset:(NSTimeInterval)timeOffset {
-    [self.theTransitionContext containerView].layer.timeOffset = timeOffset;
+    
+    /*
+     WTF !!!!
+     
+     How is it possible that self.transitionContext is now nil !!!!!
+     */
+    [self.transitionContext containerView].layer.timeOffset = timeOffset;
 }
 - (void)_tickCancelAnimation {
     NSTimeInterval timeOffset = [self _timeOffset]-[_displayLink duration];
@@ -122,12 +128,12 @@
     }
 }
 - (CFTimeInterval)_timeOffset {
-    return [self.theTransitionContext containerView].layer.timeOffset;
+    return [self.transitionContext containerView].layer.timeOffset;
 }
 - (void)_transitionFinishedCanceling {
     [_displayLink invalidate];
     
-    CALayer *layer = [self.theTransitionContext containerView].layer;
+    CALayer *layer = [self.transitionContext containerView].layer;
     layer.speed = 1;
 }
 

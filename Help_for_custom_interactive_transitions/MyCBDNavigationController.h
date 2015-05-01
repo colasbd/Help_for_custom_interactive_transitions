@@ -39,7 +39,7 @@
 
 
 
-
+@class AWPercentDrivenInteractiveTransition ;
 
 @interface MyCBDNavigationController : UIViewController
 
@@ -48,7 +48,8 @@
 #pragma mark - Init
 
 - (instancetype)initWithRootViewController:(UIViewController *)viewController
-                                 withFrame:(CGRect)frame ;
+                                 withFrame:(CGRect)frame
+                 withInteractionController:(AWPercentDrivenInteractiveTransition *)interactionController;
 
 
 #pragma mark - Object state

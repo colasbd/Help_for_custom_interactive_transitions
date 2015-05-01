@@ -13,26 +13,6 @@
 
 
 
-/**************************************/
-#pragma mark - Declaration of constants
-/**************************************/
-//
-//extern NSString* const <#example of a constant#> ;
-
-
-
-
-
-/**************************************/
-#pragma mark - Enums
-/**************************************/
-//
-//typedef NS_ENUM(NSInteger, <#example of ENUM#>)
-//{
-//    <#example of ENUM#>Item1,
-//    <#example of ENUM#>Item2,
-//    <#example of ENUM#>Item3,
-//};
 
 
 
