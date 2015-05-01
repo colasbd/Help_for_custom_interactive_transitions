@@ -41,7 +41,7 @@
     [super viewDidLoad];
 
     ColorViewController * cvc = [ColorViewController new] ;
-    
+    cvc.label = @"INITIAL" ;
     CGRect frame = self.mainView.frame ;
     frame.origin = CGPointZero ;
     
@@ -66,7 +66,8 @@
     
     
     ColorViewController * cvc2 = [ColorViewController new] ;
-    
+    cvc2.label = @"INITIAL" ;
+
     CGRect frame2 = self.mainView2.frame ;
     frame2.origin = CGPointZero ;
     

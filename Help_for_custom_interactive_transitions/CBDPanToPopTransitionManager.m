@@ -40,11 +40,16 @@
 
 
 
+/**************************************/
+#pragma mark - Constants
+/**************************************/
+
+static CGFloat const kDefaultFirstLimitValueForCompleting = 0.3f ;
+static CGFloat const kDefaultSecondLimitValueForCompleting = 0.5f ;
 
 
-
-
-
+static CGFloat const kBigVelocity = 500.0f ;
+static CGFloat const kSmallVelocity = 50.0f ;
 
 
 /**************************************/
@@ -67,8 +72,7 @@
 /*
  Object state
 */
-@property (nonatomic, assign, readwrite) BOOL leftToRightTransition;
-@property (nonatomic, assign, readwrite) BOOL interactionStarted ;
+
 
 /*
  Convenient properties
@@ -113,6 +117,16 @@
     
     if (self)
     {
+        /*
+         Init
+         */
+        _firstLimitValueForCompleting = kDefaultFirstLimitValueForCompleting ;
+        _secondLimitValueForCompleting = kDefaultSecondLimitValueForCompleting ;
+        
+        
+        /*
+         Gesture recognizer
+         */
         _mainPanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self
                                                                              action:@selector(mainPan:)] ;
         
@@ -136,12 +150,6 @@
 - (void)startInteractiveTransition:(id<UIViewControllerContextTransitioning>)transitionContext
 {
     [super startInteractiveTransition:transitionContext];
-
-    self.interactionStarted = YES ;
-    
-    UIPanGestureRecognizer * recognizer = self.mainPanGestureRecognizer ;
-    
-    self.leftToRightTransition = [recognizer velocityInView:recognizer.view].x > 0;
 }
 
 
@@ -162,23 +170,27 @@
     {
         CGPoint translation = [recognizer translationInView:recognizer.view];
         CGFloat d = translation.x / CGRectGetWidth(recognizer.view.bounds);
-        if (!self.leftToRightTransition) d *= -1;
 
-        if (self.interactionStarted)
-        {
-            [self updateInteractiveTransition:d*2];
-        }
+        [self updateInteractiveTransition:d*2];
     }
     else if (recognizer.state >= UIGestureRecognizerStateEnded)
     {
-        if (self.percentComplete > 0.2)
+        NSLog(@"velocity : %f", [recognizer velocityInView:recognizer.view].x) ;
+        
+        if (
+            (self.percentComplete > self.firstLimitValueForCompleting
+            &&
+             [recognizer velocityInView:recognizer.view].x > kSmallVelocity)
+            ||
+            [recognizer velocityInView:recognizer.view].x > kBigVelocity
+            ||
+            self.percentComplete > self.secondLimitValueForCompleting
+            )
         {
-            self.interactionStarted = NO ;
             [self finishInteractiveTransition];
         }
         else
         {
-            self.interactionStarted = NO ;
             [self cancelInteractiveTransition];
         }
     }

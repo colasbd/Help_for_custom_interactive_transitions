@@ -24,6 +24,11 @@
 
 - (instancetype)initWitMainViewForPanning:(UIView *)mainViewForSwiping;
 
+
+// if the interacted transition goes beyond this value, it will finish
+@property (nonatomic, assign, readwrite) CGFloat firstLimitValueForCompleting ;
+@property (nonatomic, assign, readwrite) CGFloat secondLimitValueForCompleting ;
+
 @property (nonatomic, weak, readwrite) MyCBDNavigationController * navigationController ;
 
 @end

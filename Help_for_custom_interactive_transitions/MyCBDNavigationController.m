@@ -178,9 +178,14 @@
 // Supress warnings by implementing empty interaction methods for the remainder of the protocol:
 
 - (void)updateInteractiveTransition:(CGFloat)percentComplete {}
-- (void)finishInteractiveTransition {
-    self.transitionWasCancelled = NO;}
-- (void)cancelInteractiveTransition {self.transitionWasCancelled = YES;}
+- (void)finishInteractiveTransition
+{
+    self.transitionWasCancelled = NO;
+}
+- (void)cancelInteractiveTransition
+{
+    self.transitionWasCancelled = YES;
+}
 
 @end
 
@@ -501,15 +506,23 @@
         transitionContext.animated = YES;
         transitionContext.interactive = (interactionController != nil);
         transitionContext.completionBlock = ^(BOOL didComplete) {
-            [poppedOutVC.view removeFromSuperview];
-            [poppedOutVC removeFromParentViewController];
-            
-            [self.mutableViewControllers removeLastObject] ;
-            [self.mutableTransitions removeLastObject] ;
+            if (didComplete)
+            {
+                [poppedOutVC.view removeFromSuperview];
+                [poppedOutVC removeFromParentViewController];
+                
+                [self.mutableViewControllers removeLastObject] ;
+                [self.mutableTransitions removeLastObject] ;
+            }
+            else
+            {
+                self.nextViewControllerToPop = poppedOutVC ;
+            }
             self.numberOfVCToBePopped-- ;
             
             
-            if ([animator respondsToSelector:@selector (animationEnded:)]) {
+            if ([animator respondsToSelector:@selector(animationEnded:)])
+            {
                 [animator animationEnded:didComplete];
             }
         };
@@ -531,6 +544,35 @@
         }
     }
 }
+
+
+//
+//transitionContext.interactive = (interactionController != nil);
+//transitionContext.completionBlock = ^(BOOL didComplete) {
+//    
+//    if (didComplete) {
+//        [fromViewController.view removeFromSuperview];
+//        [fromViewController removeFromParentViewController];
+//        [toViewController didMoveToParentViewController:self];
+//        [self _finishTransitionToChildViewController:toViewController];
+//        
+//    } else {
+//        [toViewController.view removeFromSuperview];
+//    }
+//    
+//    if ([animator respondsToSelector:@selector (animationEnded:)]) {
+//        [animator animationEnded:didComplete];
+//    }
+//    self.privateButtonsView.userInteractionEnabled = YES;
+//};
+//
+//self.privateButtonsView.userInteractionEnabled = NO; // Prevent user tapping buttons mid-transition, messing up state
+//if ([transitionContext isInteractive]) {
+//    [interactionController startInteractiveTransition:transitionContext];
+//} else {
+//    [animator animateTransition:transitionContext];
+//    [self _finishTransitionToChildViewController:toViewController];
+//}
 
 
 

@@ -84,7 +84,8 @@
 - (void)cancelInteractiveTransition {
     
     _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(_tickCancelAnimation)];
-    [_displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+    [_displayLink addToRunLoop:[NSRunLoop mainRunLoop]
+                       forMode:NSRunLoopCommonModes];
     
     [self.transitionContext cancelInteractiveTransition];
 }
@@ -105,6 +106,7 @@
 #pragma mark - Private methods
 - (void)setPercentComplete:(CGFloat)percentComplete {
     
+    NSLog(@"%% complete: %d", (int)(_percentComplete*100)) ;
     _percentComplete = percentComplete;
     
     [self _setTimeOffset:percentComplete*[self duration]];

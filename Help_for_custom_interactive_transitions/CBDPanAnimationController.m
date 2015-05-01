@@ -293,8 +293,11 @@ static NSTimeInterval const kDefaultInitialOpacity = 1 ;
                           */
                          if ([transitionContext transitionWasCancelled])
                          {
-                             toView.frame = CGRectMake(0, 0, containerView.frame.size.width, containerView.frame.size.height);
+                             //toView.frame = CGRectMake(0, 0, containerView.frame.size.width, containerView.frame.size.height);
+                             [toView removeFromSuperview];
+                             fromView.transform = CGAffineTransformIdentity ;
                              fromView.frame = CGRectMake(0, 0, containerView.frame.size.width, containerView.frame.size.height);
+                             [containerView layoutIfNeeded] ;
                          }
                          else
                          {
